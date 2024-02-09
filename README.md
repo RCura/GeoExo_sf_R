@@ -31,11 +31,11 @@ Pour importer ces fichiers shapefiles, utilisez la fonction `st_read` du package
 Le repertoire de données contient également des données statistiques à l'échelle des...    
 
     mystat <- read.csv("data/Production_rendement_superficie_agricoles.csv")
-    
+
     library(sf)
-place_sf <- st_as_sf(test, 
-                     coords = c("longitude", "latitude"), 
-                     crs = 'EPSG:32628')
+    place_sf <- st_as_sf(test, 
+                         coords = c("longitude", "latitude"), 
+                         crs = 'EPSG:32628')
 
 
 
