@@ -173,6 +173,13 @@ Calculez le nombre de localité qui abrite au moins une école ("SERV_ECOLE") da
 ##### E.3 Comptez le nombre de localités dans chacun des carreaux.
 
     grid$... <- sapply(grid_loc, FUN = ...)
+    
+</br>   
+
+##### E.4 Découpez la grille en fonction des limites du sénégal (optionel)
+
+    grid_sen <- st_intersection(..., ...)
+    
 
 </br>
 
