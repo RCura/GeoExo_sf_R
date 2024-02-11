@@ -208,7 +208,7 @@ hist(grid_sen$n_loc)
 
 ## CARTE
 # Paramètrage de l'export
-mf_export(x = sen, filename = "img/carte_1.png", width = 800)
+mf_export(x = sen, filename = "img/carte_2.png", width = 800)
 # Initialisation d'un thème
 mf_theme(bg = "steelblue3", fg= "grey10")
 # Centrage de la carte sur le Sénégal
