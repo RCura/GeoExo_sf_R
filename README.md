@@ -195,6 +195,6 @@ Exemple :
 
 ![](img/carte_2.png)
 
-Quelle critique pouvez-vous faire de cette carte thématique ? Les règles de sémiologie graphique sont-elles respectées ?
+Quelles critiques pouvez-vous faire de cette carte thématique ? Les règles de sémiologie graphique sont-elles respectées ?
 
 

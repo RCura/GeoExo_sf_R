@@ -17,8 +17,10 @@ library(mapsf)
 # A. Import des données
 ###################################################################################################
 
+# Lister les couches géographiques d'un fichier GeoPackage
 st_layers("data/GeoSenegal.gpkg")
 
+# Import des données géographiques
 pays <- st_read(dsn = "data/GeoSenegal.gpkg", layer = "Pays_voisins")
 sen <-st_read(dsn = "data/GeoSenegal.gpkg", layer = "Senegal")
 reg <-st_read(dsn = "data/GeoSenegal.gpkg", layer = "Regions")
@@ -46,7 +48,6 @@ loc_sen <- st_filter(x = loc,
 
 ## B.2 Calculez le nombre de services présent dans chaque localité. 
 #Assignez le résultat dans une nouvelle colonne de la couche géographique des localités sénégalaises.
-
 loc_sen$SERV_TT <- rowSums(loc_sen[,5:17,drop=TRUE])
 
 
@@ -61,19 +62,15 @@ routes_sen <- st_intersection(x = routes, y = sen)
 
 # Paramètrage de l'export
 mf_export(x = sen, filename = "img/carte_1.png", width = 800)
-
 # Initialisation d'un thème
 mf_theme(bg = "steelblue3", fg= "grey10")
-
 # Centrage de la carte sur le Sénégal
 mf_map(x = reg, col = NA, border = NA)
-# Ajout des limites des pays voisin
+# Ajout des limites des pays voisins
 mf_map(pays, add = TRUE)
-
 # Ajout d'un effet d'ombrage sur le Sénégal
 mf_shadow(sen, add = TRUE)
 mf_map(sen, col = "grey95", add=T)
-
 # Affichage du réseau routier
 mf_map(routes_sen, col = "grey50", lwd = 0.4, add = TRUE)
 
@@ -131,7 +128,6 @@ mf_legend(type = "prop",
 
 # Titre
 mf_title("Répartition des localités sénégalaises en 2024", fg = "white")
-
 # Sources
 mf_credits("Auteurs : Hugues Pecout\nSources : GADM & GeoSénégal, 2014", cex = 0.5)
 
@@ -197,7 +193,7 @@ grid_sen <- st_intersection(grid, sen)
 # F. Enregistrez la grille régulière dans le fichier GeoSenegal.gpkg
 ###################################################################################################
 
-# st_write(obj = grid_sen, dsn = "data/GeoSenegal.gpkg", layer = "grid_sen")
+st_write(obj = grid_sen, dsn = "data/GeoSenegal.gpkg", layer = "grid_sen")
 
 
 
@@ -210,21 +206,20 @@ grid_sen <- st_intersection(grid, sen)
 # Justification de la discrétisation (statistiques, boxplot, histogramme, beeswarm...) ?
 hist(grid_sen$n_loc)
 
+## CARTE
 # Paramètrage de l'export
 mf_export(x = sen, filename = "img/carte_1.png", width = 800)
-
 # Initialisation d'un thème
 mf_theme(bg = "steelblue3", fg= "grey10")
-
 # Centrage de la carte sur le Sénégal
 mf_map(x = reg, col = NA, border = NA)
 # Ajout des limites des pays voisin
 mf_map(pays, add = TRUE)
-
 # Ajout d'un effet d'ombrage sur le Sénégal
 mf_shadow(sen, add = TRUE)
 mf_map(sen, col = "grey95", add=T)
 
+# carte choroplèthe - Nombre de localité par carreaux
 mf_map(x = grid_sen, 
        var = "n_loc", 
        type = "choro",
