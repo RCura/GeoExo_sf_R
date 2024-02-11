@@ -23,20 +23,20 @@ Une fois le dossier dézipper, lancez le projet Rstudio en double-cliquant sur l
 #### **B. Les données à disposition**
 
 
-Les fichier de données sont mis à disposition dans le répertoire **data**, qui contient deux fichiers de données.
+Les fichier de données sont mis à disposition dans le répertoire **data**, qui contient un seul fichier de données.
 
 ![](img/data.png)
 
 
-- **Un fichier GeoPackage** (**GeoSenegal.gpkg**) qui contient 6 couches géographiques :
+**Le fichier GeoPackage** (**GeoSenegal.gpkg**) contient 7 couches géographiques :
 
-    - **Pays_voisins** : Couche des frontières du Sénégal et de l'ensemble de ses pays limitrophes. Source : https://gadm.org/, 2014   
-    - **Senegal** : Couche des frontières du Sénégal. Source : https://gadm.org/, 2014   
-    - **Regions** : Couche des régions sénégalaises. Source : https://gadm.org/, 2014   
-    - **Departements** : Couche des Departements sénégalais. Source : https://gadm.org/, 2014   
-    - **Localites** : Couche de points des localités sénagalaises. Source : Base de données géospatiales prioritaires du Sénégal. https://www.geosenegal.gouv.sn/, 2014. 
-    - **USSEIN** : Localisation de l'Université du Sine Saloum El-hâdj ibrahima NIASS. Source : Google Maps, 2014. 
-    - **Routes** : Couche du réseau routier sénégalais. Source : Base de données géospatiales prioritaires du Sénégal. https://www.geosenegal.gouv.sn/, 2014. 
+- **Pays_voisins** : Couche des frontières du Sénégal et de l'ensemble de ses pays limitrophes. Source : https://gadm.org/, 2014   
+- **Senegal** : Couche des frontières du Sénégal. Source : https://gadm.org/, 2014   
+- **Regions** : Couche des régions sénégalaises. Source : https://gadm.org/, 2014   
+- **Departements** : Couche des Departements sénégalais. Source : https://gadm.org/, 2014   
+- **Localites** : Couche de points des localités sénagalaises. Source : Base de données géospatiales prioritaires du Sénégal. https://www.geosenegal.gouv.sn/, 2014. 
+- **USSEIN** : Localisation de l'Université du Sine Saloum El-hâdj ibrahima NIASS. Source : Google Maps, 2014. 
+- **Routes** : Couche du réseau routier sénégalais. Source : Base de données géospatiales prioritaires du Sénégal. https://www.geosenegal.gouv.sn/, 2014. 
 
 </br>
 
@@ -47,7 +47,7 @@ Les fichier de données sont mis à disposition dans le répertoire **data**, qu
 
 </br>
 
-##### A. Import des données
+#### A. Import des données
 
 Importez l'ensemble des couches géographiques contenues dans le fichier GeoPackage **GeoSenegal.gpkg**.
 
@@ -57,23 +57,27 @@ Importez l'ensemble des couches géographiques contenues dans le fichier GeoPack
 
 </br>
 
-##### B. Séléction et intersection spatiale
+#### B. Séléction et intersection spatiale
 
 
-B.1 Séléctionnez (par attribut ou par localisation) uniquement les localités du Sénégal.
+##### B.1 Séléctionnez (par attribut ou par localisation) uniquement les localités du Sénégal.
 
     # Solution 1 - par attribut
     ... <- ...[...$PAYS == "...", ]
     
     # Solution 2 - par localisation
     ... <- st_filter(x = ..., y = ..., .predicate = st_intersects)
+    
+</br>
 
-B.2 Calculez le nombre de services présent dans chaque localité. Assignez le résultat dans une nouvelle colonne de la couche géographique des localités sénégalaises.
+##### B.2 Calculez le nombre de services présent dans chaque localité. Assignez le résultat dans une nouvelle colonne de la couche géographique des localités sénégalaises.
 
     ...$... <- rowSums(...[, 5:17, drop=TRUE])
     
 
-B.3 Découpez le réseau routier en fonction des limites du Sénégal.
+</br>
+
+##### B.3 Découpez le réseau routier en fonction des limites du Sénégal.
 
     ... <- st_intersection(x = ..., y = ...)
 
@@ -81,7 +85,7 @@ B.3 Découpez le réseau routier en fonction des limites du Sénégal.
 </br>
 
 
-##### C. Carte thématique des localités
+#### C. Carte thématique des localités
 
 Construisez une carte thématique représentant les localités sénagalaise par leur nombre de services qu'elles abritent (symboles proportionnels) et par leur statut ("TYPELOCAL") représenter en couleur dans les symbols proportionnels. 
 
@@ -103,6 +107,7 @@ Pour vous aider, voici les étiquettes des différentes modialités préciser da
 - 8 = Commune d’arrondissement   
 - 9 = Habitat isolé   
 
+</br>
 
       val = c("Chef-lieu de région", 
               "Chef-lieu de département", 
@@ -119,20 +124,25 @@ Pour vous aider, voici les étiquettes des différentes modialités préciser da
 </br>
 
 
-##### D. Nombre d'écoles dans un rayon de 50km ?
+#### D. Nombre d'écoles dans un rayon de 50km ?
 
-Calculez le nombre de localité qui abrite au moins une école ("SERV_ECOLE" dans la couche géographique des localités) dans un rayon de 50km (distance euclidienne) autour de l'Université du Sine Saloum El-hâdj ibrahima NIASS (USSEIN)
+Calculez le nombre de localité qui abrite au moins une école ("SERV_ECOLE") dans la couche géographique des localités) dans un rayon de 50km (distance euclidienne) autour de l'Université du Sine Saloum El-hâdj ibrahima NIASS (USSEIN)
 
-D.1. Calculez un buffer de 50 km autour d'USSEIN
+</br>
+
+##### D.1. Calculez un buffer de 50 km autour d'USSEIN
 
     ... <- st_buffer(USSEIN, ...)
+    
+</br>
 
-D.2. Séléctionnez les localités situées dans la zone tampon de 50km
+##### D.2. Séléctionnez les localités situées dans la zone tampon de 50km
 
     inters_loc_buff <- st_intersection(..., ...)
+
+</br>   
     
-    
-D.3 Combien de ces localités abrite au moins une école ?    
+##### D.3 Combien de ces localités abrite au moins une école ?    
     
     ... <- sum(inters_loc_buff$...)
     
@@ -140,9 +150,9 @@ D.3 Combien de ces localités abrite au moins une école ?
 </br>
 
 
-##### E. Utilisation d’un maillage régulier
+#### E. Utilisation d’un maillage régulier
 
-E.1 Créez un maillage régulier de carreaux de 50km de côté sur l'ensemble du Sénégal
+##### E.1 Créez un maillage régulier de carreaux de 50km de côté sur l'ensemble du Sénégal
 
     grid <- st_make_grid(..., cellsize = ..., square = ...).
     
@@ -152,30 +162,32 @@ E.1 Créez un maillage régulier de carreaux de 50km de côté sur l'ensemble du
     # Ajouter un identifiant unique à chaque carreaux
     grid$id<- 1:nrow(grid)
 
+</br>
 
-E.2 Récuperez le carreau d'appartenance (id) de chaque localité.
+##### E.2 Récuperez le carreau d'appartenance (id) de chaque localité.
 
     grid_loc <- st_intersects(..., ..., sparse = TRUE)
     
+</br>
 
-E.3 Comptez le nombre de localités dans chacun des carreaux.
+##### E.3 Comptez le nombre de localités dans chacun des carreaux.
 
     grid$... <- sapply(grid_loc, FUN = ...)
 
+</br>
 
-F. Enregistrez la grille régulière vectorielle de 50km de coté et découper par les limites de Sénégal dans le fichier **GeoSenegal.gpkg**
+#### F. Enregistrez la grille régulière découpée par les limites de Sénégal dans le fichier **GeoSenegal.gpkg**
 
     st_write(obj = ..., dsn = "data/GeoSenegal.gpkg", layer = "...")
 
+</br>
 
-G. Construisez une carte représentant le nombre de localité par carreau.
+#### G. Construisez une carte représentant le nombre de localité par carreau.
 
 Exemple : 
 
 ![](img/carte_2.png)
 
-Quelle critique pouvez-vous faire de cette carte thématique ?
-
-H. BONUS - Calcul de potentiel d"'accessibilité à des services
+Quelle critique pouvez-vous faire de cette carte thématique ? Les règles de sémiologie graphique sont-elles respectées ?
 
 
