@@ -189,7 +189,7 @@ Calculez le nombre de localité qui abrite au moins une école ("SERV_ECOLE") da
 
 </br>
 
-#### G. Construisez une carte représentant le nombre de localité par carreau.
+#### G. Construisez une carte représentant le nombre de localités par carreau.
 
 Exemple : 
 
