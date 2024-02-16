@@ -2,7 +2,7 @@
 
 ### Master Géomatique - Université du Sine Saloum El-Hâdj Ibrahima NIASS
 
-*Hugues Pecout*
+*Hugues Pecout (CNRS, UMR Géographie-Cités)*
 
 </br>
 
@@ -10,20 +10,19 @@
 
 Un projet Rstudio est téléchargeable à ce lien : [**https://github.com/HuguesPecout/GeoExo_sf_R**](https://github.com/HuguesPecout/GeoExo_sf_R)
 
-Téléchargez le dépot zipper ("*Download ZIP*") **GeoExo_sf_R** sur votre machine.   
+Téléchargez le dépot zippé ("*Download ZIP*") **GeoExo_sf_R** sur votre machine.   
 
 </br>
 
 ![](img/download.png)
 
-Une fois le dossier dézipper, lancez le projet Rstudio en double-cliquant sur le fichier **GeoExo_sf_R.Rproj**.
+Une fois le dossier dézippé, lancez le projet Rstudio en double-cliquant sur le fichier **GeoExo_sf_R.Rproj**.
 
 </br>
 
 #### **B. Les données à disposition**
 
-
-Les fichier de données sont mis à disposition dans le répertoire **data**, qui contient un seul fichier de données.
+Le fichier de données est mis à disposition dans le répertoire **data**.
 
 ![](img/data.png)
 
@@ -33,8 +32,8 @@ Les fichier de données sont mis à disposition dans le répertoire **data**, qu
 - **Pays_voisins** : Couche des frontières du Sénégal et de l'ensemble de ses pays limitrophes. Source : https://gadm.org/, 2014   
 - **Senegal** : Couche des frontières du Sénégal. Source : https://gadm.org/, 2014   
 - **Regions** : Couche des régions sénégalaises. Source : https://gadm.org/, 2014   
-- **Departements** : Couche des Departements sénégalais. Source : https://gadm.org/, 2014   
-- **Localites** : Couche de points des localités sénagalaises. Source : Base de données géospatiales prioritaires du Sénégal. https://www.geosenegal.gouv.sn/, 2014. 
+- **Departements** : Couche des départements sénégalais. Source : https://gadm.org/, 2014   
+- **Localites** : Couche de points des localités sénégalaises. Source : Base de données géospatiales prioritaires du Sénégal. https://www.geosenegal.gouv.sn/, 2014. 
 - **USSEIN** : Localisation de l'Université du Sine Saloum El-hâdj ibrahima NIASS. Source : Google Maps, 2014. 
 - **Routes** : Couche du réseau routier sénégalais. Source : Base de données géospatiales prioritaires du Sénégal. https://www.geosenegal.gouv.sn/, 2014. 
 
@@ -70,7 +69,8 @@ Importez l'ensemble des couches géographiques contenues dans le fichier GeoPack
     
 </br>
 
-##### B.2 Calculez le nombre de services présent dans chaque localité. Assignez le résultat dans une nouvelle colonne de la couche géographique des localités sénégalaises.
+##### B.2 Calculez le nombre de services présents dans chaque localité. 
+Assignez le résultat dans une nouvelle colonne de la couche géographique des localités sénégalaises.
 
     ...$... <- rowSums(...[, 5:17, drop=TRUE])
     
@@ -87,7 +87,7 @@ Importez l'ensemble des couches géographiques contenues dans le fichier GeoPack
 
 #### C. Carte thématique des localités
 
-Construisez une carte thématique représentant les localités sénagalaise par leur nombre de services qu'elles abritent (symboles proportionnels) et par leur statut ("TYPELOCAL") représenter en couleur dans les symbols proportionnels. 
+Construisez une carte thématique représentant les localités sénagalaises par leur nombre de services qu'elles abritent (symboles proportionnels) et par leur statut ("TYPELOCAL") représenter en couleur dans les symbols proportionnels. 
 
 Exemple :
 
@@ -95,7 +95,7 @@ Exemple :
 
 </br>
     
-Pour vous aider, voici les étiquettes des différentes modialités préciser dans les métadonnées :  
+Pour vous aider, voici les étiquettes des différentes modialités (cf. métadonnées) :  
 
 - 1 = Chef-lieu de région    
 - 2 = Chef-lieu de département   
@@ -126,7 +126,7 @@ Pour vous aider, voici les étiquettes des différentes modialités préciser da
 
 #### D. Nombre d'écoles dans un rayon de 50km ?
 
-Calculez le nombre de localité qui abrite au moins une école ("SERV_ECOLE") dans la couche géographique des localités) dans un rayon de 50km (distance euclidienne) autour de l'Université du Sine Saloum El-hâdj ibrahima NIASS (USSEIN)
+Calculez le nombre de localités qui abrite au moins une école (attribut "SERV_ECOLE" dans la couche géographique des localités) dans un rayon de 50km (distance euclidienne) autour de l'Université du Sine Saloum El-hâdj ibrahima NIASS (USSEIN).
 
 </br>
 
@@ -142,7 +142,7 @@ Calculez le nombre de localité qui abrite au moins une école ("SERV_ECOLE") da
 
 </br>   
     
-##### D.3 Combien de ces localités abrite au moins une école ?    
+##### D.3 Combien de ces localités abritent au moins une école ?    
     
     ... <- sum(inters_loc_buff$...)
     

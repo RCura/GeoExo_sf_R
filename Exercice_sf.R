@@ -41,7 +41,7 @@ library(mapsf)
 
 
 
-## B.2 Calculez le nombre de services présent dans chaque localité. 
+## B.2 Calculez le nombre de services présents dans chaque localité. 
 #Assignez le résultat dans une nouvelle colonne de la couche géographique des localités sénégalaises.
 
 
@@ -79,8 +79,8 @@ library(mapsf)
 
 
 
-## D.3 Combien de ces localités abrite au moins une école ?
-# Nombre de localité dans un rayon de 50km ?
+## D.3 Combien de ces localités abritent au moins une école ?
+# Nombre de localités dans un rayon de 50km ?
 
 
 # Affichage du résultat dans la console

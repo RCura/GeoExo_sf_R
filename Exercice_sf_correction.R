@@ -9,6 +9,9 @@
 # Chargement des librairies
 ###################################################################################################
 
+# install.packages("sf")
+# install.packages("mapsf")
+
 library(sf)
 library(mapsf)
 
@@ -49,9 +52,9 @@ loc_sen <- st_filter(x = loc,
 
 
 
-## B.2 Calculez le nombre de services présent dans chaque localité. 
-#Assignez le résultat dans une nouvelle colonne de la couche géographique des localités sénégalaises.
-loc_sen$SERV_TT <- rowSums(loc_sen[,5:17,drop=TRUE])
+## B.2 Calculez le nombre de services présents dans chaque localité. 
+# Assignez le résultat dans une nouvelle colonne de la couche géographique des localités sénégalaises.
+loc_sen$SERV_TT <- rowSums(loc_sen[,5:17, drop=TRUE])
 
 
 ## B.3 Découpez le réseau routier en fonction des limites du Sénégal.
@@ -65,7 +68,7 @@ routes_sen <- st_intersection(x = routes, y = sen)
 ###################################################################################################
 
 # Paramètrage de l'export
-mf_export(x = sen, filename = "img/carte_1.png", width = 800)
+# mf_export(x = sen, filename = "img/carte_1.png", width = 800)
 
 # Initialisation d'un thème
 mf_theme(bg = "steelblue3", fg= "grey10")
@@ -80,7 +83,7 @@ mf_map(sen, col = "grey95", add=T)
 mf_map(routes_sen, col = "grey50", lwd = 0.4, add = TRUE)
 
 # Affichage des localités 
-# Symbols proportionnels = Nombre total de services / couleur = type de localité
+# Symbols proportionnels = Nombre total de services & couleur = type de localité
 mf_map(x = loc_sen, 
        var = c("SERV_TT", "TYPELOCAL"),
        type = "prop_typo",
@@ -101,7 +104,7 @@ text(x = 875867.9, y = 1541766, labels = "Mali", col="#00000099", cex = 0.6)
 text(x = 683394.9, y = 1818838, labels = "Mauritanie", col="#00000099", cex = 0.6)
 
 # Reconstruction de la légende
-# Legend sur le type de localités
+# Légende sur le type de localités
 mf_legend(type = "typo", 
           val = c("Chef-lieu de région", 	
                   "Chef-lieu de département",
@@ -137,7 +140,7 @@ mf_title("Répartition des localités sénégalaises en 2024", fg = "white")
 mf_credits("Auteurs : Hugues Pecout\nSources : GADM & GeoSénégal, 2014", cex = 0.5)
 
 # Enregistrement du fichier png
-dev.off()
+# dev.off()
 
 
 
@@ -159,8 +162,8 @@ buf_50km <- st_buffer(USSEIN, 50000)
 inters_loc_buff <- st_intersection(loc, buf_50km)
 
 
-## D.3 Combien de ces localités abrite au moins une école ?
-# Nombre de localité dans un rayon de 50km ?
+## D.3 Combien de ces localités abritent au moins une école ?
+# Nombre de localités dans un rayon de 50km ?
 nb_loc_ecole_50km_USSEIN <- sum(inters_loc_buff$SERV_ECOLE)
 
 # Affichage du résultat dans la console
@@ -174,7 +177,7 @@ cat(paste0("Le nombre de localités abritant (au moins) une école dans un rayon
 # E. Utilisation d’un maillage régulier
 ###################################################################################################
 
-## E.1 Créez un maillage régulier de carreaux de 50km de côté sur l'ensemble du Sénégal
+## E.1 Créez un maillage régulier de carreaux de 15km de côté sur l'ensemble du Sénégal
 grid <- st_make_grid(sen, cellsize = 15000, square = TRUE)
 # Transformer la grille en objet sf avec st_sf()
 grid <- st_sf(geometry = grid)
@@ -217,7 +220,8 @@ hist(grid_sen$n_loc)
 
 ## CARTE
 # Paramètrage de l'export
-mf_export(x = sen, filename = "img/carte_2.png", width = 800)
+# mf_export(x = sen, filename = "img/carte_2.png", width = 800)
+
 # Initialisation d'un thème
 mf_theme(bg = "steelblue3", fg= "grey10")
 # Centrage de la carte sur le Sénégal
@@ -259,12 +263,14 @@ text(x = 875867.9, y = 1541766, labels = "Mali", col="#00000099", cex = 0.6)
 text(x = 683394.9, y = 1818838, labels = "Mauritanie", col="#00000099", cex = 0.6)
 
 # Titre
-mf_title("Nombre de localités sénégalaises dans un carroaye de 15km", fg = "white")
+mf_title("Nombre de localités sénégalaises dans un carroyage de 15km", fg = "white")
 # Sources
 mf_credits("Auteurs : Hugues Pecout\nSources : GADM & GeoSénégal, 2014", cex = 0.5)
 
 # Enregistrement du fichier png
-dev.off()
+# dev.off()
+
+
 
 
 
@@ -355,6 +361,6 @@ text(x = 875867.9, y = 1541766, labels = "Mali", col="#00000099", cex = 0.75)
 text(x = 683394.9, y = 1818838, labels = "Mauritanie", col="#00000099", cex = 0.75)
 
 
-mf_title(paste0("Potentiel d'accès à ", service), fg = "white")
+mf_title(paste0("Potentiel d'accès à ", service, ", dans un rayon de 20km"), fg = "white")
 mf_credits("Auteurs : Hugues Pecout\nSources : GADM & GeoSénégal, 2014", cex = 0.5)
 
