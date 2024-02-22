@@ -172,7 +172,7 @@ Calculez le nombre de localités qui abrite au moins une école (attribut "SERV_
 
 ##### E.3 Comptez le nombre de localités dans chacun des carreaux.
 
-    grid$... <- sapply(grid_loc, FUN = ...)
+    grid$... <- lengths(grid_loc)
     
 </br>   
 
