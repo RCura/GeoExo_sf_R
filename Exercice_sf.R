@@ -9,8 +9,12 @@
 # Chargement des librairies
 ###################################################################################################
 
-library(sf)
-library(mapsf)
+library(tidyverse) # Manipulation "tidy" de données
+library(sf) # Manipulation d'information géographique
+
+library(ggplot2) # Création généraliste de graphiques
+library(mapview) # Exploration cartographique interactive
+library(mapsf) # Cartographie statique
 
 
 

@@ -62,7 +62,7 @@ Importer l'ensemble des couches géographiques contenues dans le fichier GeoPack
 ##### B.1 Sélectionner (par attribut ou par localisation) uniquement les localités du Sénégal.
 
     # Solution 1 - par attribut
-    ... <- ...[...$PAYS == "...", ]
+    ... <- loc %>% filter(... == ...)
     
     # Solution 2 - par localisation
     ... <- st_filter(x = ..., y = ..., .predicate = st_intersects)
@@ -144,7 +144,7 @@ Calculer le nombre de localités qui abrite au moins une école (attribut "SERV_
     
 ##### D.3 Combien de ces localités abritent au moins une école ?    
     
-    ... <- sum(inters_loc_buff$...)
+    ... <- inters_loc_buff %>% filter(...) %>% ...
     
 
 </br>
@@ -160,14 +160,13 @@ Calculer le nombre de localités qui abrite au moins une école (attribut "SERV_
     grid <- st_sf(geometry = grid)
     
     # Ajouter un identifiant unique à chaque carreaux
-    grid$id<- 1:nrow(grid)
+    grid <- grid %>% mutate(id_grid = row_number())
 
 </br>
 
 ##### E.2 Récuperer le carreau d'appartenance (id) de chaque localité.
 
-    grid_loc <- st_intersects(..., ..., sparse = TRUE)
-    
+    grid_loc <- grid %>% st_join(...)
 </br>
 
 ##### E.3 Compter le nombre de localités dans chacun des carreaux.

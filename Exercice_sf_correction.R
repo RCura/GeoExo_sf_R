@@ -9,11 +9,19 @@
 # Chargement des librairies
 ###################################################################################################
 
-# install.packages("sf")
-# install.packages("mapsf")
+# install.packages("tidyverse") # Manipulation "tidy" de données
+# install.packages("sf") # Manipulation d'information géographique
+# install.packages("ggplot2") # Création généraliste de graphiques
+# install.packages("mapview") # Exploration cartographique interactive
+# install.packages("mapsf") # Cartographie statique
 
-library(sf)
-library(mapsf)
+
+library(tidyverse) # Manipulation "tidy" de données
+library(sf) # Manipulation d'information géographique
+
+library(ggplot2) # Création généraliste de graphiques
+library(mapview) # Exploration cartographique interactive
+library(mapsf) # Cartographie statique
 
 
 
@@ -41,10 +49,10 @@ routes <- st_read(dsn = "data/GeoSenegal.gpkg", layer = "Routes")
 # B. Séléction et intersection spatiale
 ###################################################################################################
 
-## B.1 Séléctionnez (par attribut ou par localisation) uniquement les localités du Sénégal.
+## B.1 Sélectionnez (par attribut ou par localisation) uniquement les localités du Sénégal.
 
 # Solution 1 - par attribut
-loc_sen <- loc[loc$PAYS == "SN", ]
+loc_sen <- loc %>% filter(PAYS == "SN")
 # Solution 2 - par localisation
 loc_sen <- st_filter(x = loc, 
                      y = sen,
@@ -55,13 +63,16 @@ loc_sen <- st_filter(x = loc,
 ## B.2 Calculez le nombre de services présents dans chaque localité. 
 # Assignez le résultat dans une nouvelle colonne de la couche géographique des localités sénégalaises.
 loc_sen$SERV_TT <- rowSums(loc_sen[,5:17, drop=TRUE])
+# ou (syntaxe dplyr)
+loc_sen <- loc_sen %>%
+  mutate(SERV_TT = rowSums(across(starts_with("SERV_"))))
 
 
 ## B.3 Découpez le réseau routier en fonction des limites du Sénégal.
 routes_sen <- st_intersection(x = routes, y = sen)
 
-
-
+plot(st_geometry(routes), col = "grey")
+plot(st_geometry(routes_sen), col = "black", add = TRUE)
 
 ###################################################################################################
 # C. Carte thématique des localités
@@ -157,14 +168,14 @@ st_crs(USSEIN)
 buf_50km <- st_buffer(USSEIN, 50000)
 
 
-## D.2. Séléctionnez les localités situées dans la zone tampon de 50km
+## D.2. Selectionnez les localités situées dans la zone tampon de 50km
 # Intersection entre les localités et le buffer
 inters_loc_buff <- st_intersection(loc, buf_50km)
 
 
 ## D.3 Combien de ces localités abritent au moins une école ?
 # Nombre de localités dans un rayon de 50km ?
-nb_loc_ecole_50km_USSEIN <- sum(inters_loc_buff$SERV_ECOLE)
+nb_loc_ecole_50km_USSEIN <- inters_loc_buff %>% filter(SERV_ECOLE >= 1) %>% nrow()
 
 # Affichage du résultat dans la console
 cat(paste0("Le nombre de localités abritant (au moins) une école dans un rayon de 50 km autour de l'",
@@ -182,21 +193,22 @@ grid <- st_make_grid(sen, cellsize = 15000, square = TRUE)
 # Transformer la grille en objet sf avec st_sf()
 grid <- st_sf(geometry = grid)
 # Ajouter un identifiant unique, voir chapitre 3.7.6
-grid$id_grid <- 1:nrow(grid)
-
+grid <- grid %>% mutate(id_grid = row_number())
 
 ## E.2 Récupérez le carreau d'appartenance (id) de chaque localité.
-grid_loc<- st_intersects(grid, loc, sparse = TRUE)
-
+grid_loc<- grid %>%
+  st_join(loc)
 
 ## E.3 Comptez le nombre de localités dans chacun des carreaux.
-grid$n_loc <- lengths(grid_loc)
+grid_loc <- grid_loc %>%
+  group_by(id_grid) %>%
+  summarise(n_loc = n())
 
 
 # E.4 Découpez la grille en fonction des limites du sénégal (optionel)
-grid_sen <- st_intersection(grid, sen)
+grid_sen <- st_intersection(grid_loc, sen)
 
-
+plot(grid_sen["n_loc"])
 
 
 
@@ -328,7 +340,7 @@ mf_map(x = iso, var = "min", type = "choro",
        border = "#121725", 
        leg_pos = "topright",
        leg_val_rnd = 5,
-       leg_title = "Potentiel of\nd'accéssibilité", add = TRUE)
+       leg_title = "Potentiel \nd'accessibilité", add = TRUE)
 
 mf_map(routes_sen, lwd = .3, col ="#b5b3b5", add=T )
 mf_map(loc_sen, add=T, col = "white", pch = ".", cex = .1)
