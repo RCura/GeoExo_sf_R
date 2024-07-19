@@ -6,17 +6,17 @@
 
 </br>
 
-#### **A. Téléchargement de l’espace de travail**
+#### **A. Téléchargement de l'espace de travail**
 
-Un projet Rstudio est téléchargeable à ce lien : [**https://github.com/HuguesPecout/GeoExo_sf_R**](https://github.com/HuguesPecout/GeoExo_sf_R)
+Un projet Rstudio est téléchargeable à ce lien : [**https://github.com/RCura/GeoExo_sf_R**](https://github.com/RCura/GeoExo_sf_R)
 
-Téléchargez le dépot zippé ("*Download ZIP*") **GeoExo_sf_R** sur votre machine.   
+Téléchargez le dépôt zippé ("*Download ZIP*") **GeoExo_sf_R** sur votre machine.   
 
 </br>
 
 ![](img/download.png)
 
-Une fois le dossier dézippé, lancez le projet Rstudio en double-cliquant sur le fichier **GeoExo_sf_R.Rproj**.
+Une fois le dossier dé-zippé, lancez le projet Rstudio en double-cliquant sur le fichier **GeoExo_sf_R.Rproj**.
 
 </br>
 
@@ -48,18 +48,18 @@ Le fichier de données est mis à disposition dans le répertoire **data**.
 
 #### A. Import des données
 
-Importez l'ensemble des couches géographiques contenues dans le fichier GeoPackage **GeoSenegal.gpkg**.
+Importer l'ensemble des couches géographiques contenues dans le fichier GeoPackage **GeoSenegal.gpkg**.
 
     st_layers("data/GeoSenegal.gpkg")
-
+*
     ... <- st_read(dsn = "data/GeoSenegal.gpkg", layer = "...")
 
 </br>
 
-#### B. Séléction et intersection spatiale
+#### B. Sélection et intersection spatiale
 
 
-##### B.1 Séléctionnez (par attribut ou par localisation) uniquement les localités du Sénégal.
+##### B.1 Sélectionner (par attribut ou par localisation) uniquement les localités du Sénégal.
 
     # Solution 1 - par attribut
     ... <- ...[...$PAYS == "...", ]
@@ -69,15 +69,15 @@ Importez l'ensemble des couches géographiques contenues dans le fichier GeoPack
     
 </br>
 
-##### B.2 Calculez le nombre de services présents dans chaque localité. 
-Assignez le résultat dans une nouvelle colonne de la couche géographique des localités sénégalaises.
+##### B.2 Calculer le nombre de services présents dans chaque localité. 
+Assigner le résultat dans une nouvelle colonne de la couche géographique des localités sénégalaises.
 
     ...$... <- rowSums(...[, 5:17, drop=TRUE])
     
 
 </br>
 
-##### B.3 Découpez le réseau routier en fonction des limites du Sénégal.
+##### B.3 Découper le réseau routier en fonction des limites du Sénégal.
 
     ... <- st_intersection(x = ..., y = ...)
 
@@ -87,7 +87,7 @@ Assignez le résultat dans une nouvelle colonne de la couche géographique des l
 
 #### C. Carte thématique des localités
 
-Construisez une carte thématique représentant les localités sénagalaises par leur nombre de services qu'elles abritent (symboles proportionnels) et par leur statut ("TYPELOCAL") représenter en couleur dans les symbols proportionnels. 
+Construisez une carte thématique représentant les localités sénégalaises par leur nombre de services qu'elles abritent (symboles proportionnels) et par leur statut ("TYPELOCAL") représenter en couleur dans les symboles proportionnels. 
 
 Exemple :
 
@@ -95,28 +95,28 @@ Exemple :
 
 </br>
     
-Pour vous aider, voici les étiquettes des différentes modialités (cf. métadonnées) :  
+Pour vous aider, voici les étiquettes des différentes modalités (cf. métadonnées) :  
 
 - 1 = Chef-lieu de région    
 - 2 = Chef-lieu de département   
-- 3 = Chef-lieu d’arrondissement   
+- 3 = Chef-lieu arrondissement   
 - 4 = Chef-lieu de communauté rurale   
 - 5 = Commune   
 - 6 = Village important   
 - 7 = Village  
-- 8 = Commune d’arrondissement   
+- 8 = Commune arrondissement   
 - 9 = Habitat isolé   
 
 </br>
 
       val = c("Chef-lieu de région", 
               "Chef-lieu de département", 
-              "Chef-lieu d’arrondissement",
+              "Chef-lieu d'arrondissement",
               "Chef-lieu de communauté rurale", 
               "Commune", 
               "Village important", 
               "Village",
-              "Commune d’arrondissement", 
+              "Commune d'arrondissement", 
               "Habitat isolé")
 
 
@@ -126,17 +126,17 @@ Pour vous aider, voici les étiquettes des différentes modialités (cf. métado
 
 #### D. Nombre d'écoles dans un rayon de 50km ?
 
-Calculez le nombre de localités qui abrite au moins une école (attribut "SERV_ECOLE" dans la couche géographique des localités) dans un rayon de 50km (distance euclidienne) autour de l'Université du Sine Saloum El-hâdj ibrahima NIASS (USSEIN).
+Calculer le nombre de localités qui abrite au moins une école (attribut "SERV_ECOLE" dans la couche géographique des localités) dans un rayon de 50km (distance euclidienne) autour de l'Université du Sine Saloum El-hâdj ibrahima NIASS (USSEIN).
 
 </br>
 
-##### D.1. Calculez un buffer de 50 km autour d'USSEIN
+##### D.1. Calculer un buffer de 50 km autour d'USSEIN
 
     ... <- st_buffer(USSEIN, ...)
     
 </br>
 
-##### D.2. Séléctionnez les localités situées dans la zone tampon de 50km
+##### D.2. Sélectionner les localités situées dans la zone tampon de 50km
 
     inters_loc_buff <- st_intersection(..., ...)
 
@@ -150,9 +150,9 @@ Calculez le nombre de localités qui abrite au moins une école (attribut "SERV_
 </br>
 
 
-#### E. Utilisation d’un maillage régulier
+#### E. Utilisation d'un maillage régulier
 
-##### E.1 Créez un maillage régulier de carreaux de 50km de côté sur l'ensemble du Sénégal
+##### E.1 Créer un maillage régulier de carreaux de 50km de côté sur l'ensemble du Sénégal
 
     grid <- st_make_grid(..., cellsize = ..., square = ...).
     
@@ -164,32 +164,34 @@ Calculez le nombre de localités qui abrite au moins une école (attribut "SERV_
 
 </br>
 
-##### E.2 Récuperez le carreau d'appartenance (id) de chaque localité.
+##### E.2 Récuperer le carreau d'appartenance (id) de chaque localité.
 
     grid_loc <- st_intersects(..., ..., sparse = TRUE)
     
 </br>
 
-##### E.3 Comptez le nombre de localités dans chacun des carreaux.
+##### E.3 Compter le nombre de localités dans chacun des carreaux.
 
-    grid$... <- lengths(grid_loc)
+    grid_loc <- grid_loc %>%
+      group_by(...) %>%
+      summarise(n_loc = ...)
     
 </br>   
 
-##### E.4 Découpez la grille en fonction des limites du sénégal (optionel)
+##### E.4 Découper la grille en fonction des limites du sénégal (optionel)
 
     grid_sen <- st_intersection(..., ...)
     
 
 </br>
 
-#### F. Enregistrez la grille régulière découpée par les limites de Sénégal dans le fichier **GeoSenegal.gpkg**
+#### F. Enregistrer la grille régulière découpée par les limites de Sénégal dans le fichier **GeoSenegal.gpkg**
 
     st_write(obj = ..., dsn = "data/GeoSenegal.gpkg", layer = "...")
 
 </br>
 
-#### G. Construisez une carte représentant le nombre de localités par carreau.
+#### G. Construire une carte représentant le nombre de localités par carreau.
 
 Exemple : 
 
