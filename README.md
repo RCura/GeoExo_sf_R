@@ -199,3 +199,33 @@ Exemple :
 Quelles critiques pouvez-vous faire de cette carte thématique ? Les règles de sémiologie graphique sont-elles respectées ?
 
 
+
+
+
+
+
+
+
+
+## Suite du programme :
+
+- Utiliser R comme un SIG
+  - [x]  Import et export de données spatiales (vectorielles et raster)
+  - [ ]  Manipulation de données vectorielles (traitements non spatiaux - dplyr et tidyr)
+  - [x]  Opérations géométriques vectorielles avec R (sf)
+  - [ ]  Cartographie exploratoire (ggplot, mapsf et mapview)
+  - [ ]  Introduction à l'analyse spatiale : mesures de distance sur des semis de points et agrégation dans des grilles
+
+- Gérer des données tabulaires (spatiales ou non) massives
+  - [ ]  Introduction aux formats de données orientés colonne (parquet et geoparquet)
+  - [ ]  Interroger des données massives (trop grandes pour la mémoire vive) : duckdb et arrow (peut-être tidypolars), avec une syntaxe dplyr.
+
+
+## Ressources : 
+
+- https://rcarto.github.io/geomatique_avec_r/ : Géomatique avec R
+- https://r-spatial.github.io/sf/ : Documentation du package `sf`
+- https://elementr.netlify.app/posts/seance3 : Utilisation du `tidyverse` pour manipuler des données tabulaires
+- https://book.utilitr.org/03_Fiches_thematiques/Fiche_import_fichiers_parquet.html : Utiliser des données Parquet avec R 
+- https://ssphub.netlify.app/post/parquetrp/ : DuckDB sur des données Parquet avec Python (SQL), R (SQL) et R (dbplyr)
+- https://duckdb.org/docs/api/r : Documentation de DuckDB
